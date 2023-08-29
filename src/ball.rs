@@ -2,6 +2,7 @@ use bevy::{
     prelude::*,
     render::render_resource::{Extent3d, TextureDimension, TextureFormat},
 };
+use bevy_rapier3d::prelude::*;
 
 pub struct BallPlugin;
 
@@ -22,31 +23,37 @@ fn spawn_ball(
         ..default()
     });
 
-    const SIZE: f32 = 1.0;
+    const RADIUS: f32 = 1.0;
 
-    commands.spawn((
-        Name::new("Ball"),
-        // Player,
-        PbrBundle {
-            mesh: meshes.add(shape::UVSphere::default().into()),
-            material: debug_material,
-            transform: Transform::from_xyz(2. * SIZE, 2. * SIZE, 0.0),
-            ..default()
-        },
-    ))
-    // .insert((
-    //     RigidBody::Dynamic,
-    //     Collider::ball(SIZE),
-    //     ColliderMassProperties::Mass(10.),
-    //     Restitution::new(1.0),
-    //     Velocity::default(),
-    //     ExternalForce::default(),
-    //     Damping {
-    //         linear_damping: 0.5,
-    //         ..Default::default()
-    //     },
-    // ))
-    ;
+    commands
+        .spawn((
+            Name::new("Ball"),
+            // Player,
+            PbrBundle {
+                mesh: meshes.add(
+                    shape::UVSphere {
+                        radius: RADIUS,
+                        ..default()
+                    }
+                    .into(),
+                ),
+                material: debug_material,
+                transform: Transform::from_xyz(0.0, 5.0, 0.0),
+                ..default()
+            },
+        ))
+        .insert((
+            RigidBody::Dynamic,
+            Collider::ball(RADIUS),
+            ColliderMassProperties::Mass(10.),
+            // Restitution::new(1.0),
+            // Velocity::default(),
+            // ExternalForce::default(),
+            // Damping {
+            //     linear_damping: 0.5,
+            //     ..Default::default()
+            // },
+        ));
 }
 
 /// Creates a colorful test pattern

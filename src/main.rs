@@ -30,7 +30,7 @@ fn main() {
 }
 
 fn spawn_camera(mut commands: Commands) {
-    let translation = Vec3::new(-10.0, 23., 52.0);
+    let translation = Vec3::new(0.0, 23., 52.0);
     commands.spawn(Camera3dBundle {
         transform: Transform::from_translation(translation).looking_at(Vec3::ZERO, Vec3::Y),
         ..Default::default()
